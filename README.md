@@ -57,9 +57,13 @@ Using YOLO v4 consumes a lot of GPU memory and lowers the frame rate, so you nee
 
 ### Performance
 
-YOLO v3 : 67 fps (72 ~ 62 fps), uses 1781MB of VRAM
-YOLO v4 : 29 fps (27 ~ 30.5 fps), uses 3963MB of VRAM
+YOLO v3 : 67 fps , uses 1781MB of VRAM
 
+YOLO v4 : 29 fps , uses 3963MB of VRAM
+
+Scaled YOLO v4 : 51 fps , uses 2831MB of VRAM
+
+![E2tRQvnUcAQqn8O](https://user-images.githubusercontent.com/67567093/121984014-35d3e100-cdcd-11eb-9959-b1063a9a0b2b.jpeg)
 
 
 Please give it a try. Thank you.
