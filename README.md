@@ -1,5 +1,5 @@
 # darknet_ros_yolov4 (with cuDNN)
-darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + ___CUDNN (FP16)___ :fire::fire: :fire:
+darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + ___CUDNN (FP16)___ :fire::fire::fire:
 
 
 
@@ -49,7 +49,7 @@ if ( 70 IN_LIST CMAKE_CUDA_ARCHITECTURES OR
 ...
 ```
 
-In the future, we are considering automatic detection of GPU architecture.
+In the future, I'm considering automatic detection of GPU architecture.
 
 ## Demo
 
@@ -90,7 +90,7 @@ YOLO v4 : 29 fps , uses 3963MB of VRAM
 
 Scaled YOLO v4 : 51 fps , uses 2831MB of VRAM
 
-### Performance (Using cuDNN FP16)
+### Performance (using cuDNN FP16)
 
 YOLO v4 : 40 fps (+10fps)
 
