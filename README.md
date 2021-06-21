@@ -41,26 +41,8 @@ Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to sp
 FP16 is automatically enabled for GPUs of the Turing or Ampere architecture if the appropriate cuDNN is installed. To disable it, change line 12 to `set(FP16_ENABLE OFF)`.
 
 The Jetson AGX Xavier and TITAN V support FP16, but due to their Volta architecture, auto-detection is not possible. (Sorry... :( )
-In that case, please comment out line 17 ` set(CMAKE_CUDA_ARCHITECTURES 72)
 
-Open the CMakeLists.txt file and change the following.
-
-At line 10...
-
-```cmake
-...
-set(CUDA_ENABLE ON)
-set(CUDNN_ENABLE ON)
-set(FP16_ENABLE ON)
-
-# Jetson AGX Xavier & TITAN V is under version of Turing. So, please set manually.
-# Turing or Ampere GPUs, FP16 is automatically enabled.
-
-# set(CMAKE_CUDA_ARCHITECTURES 72)
-...
-```
-
-In the future, I'm considering automatic detection of GPU architecture.
+In that case, please comment out line 17 `set(CMAKE_CUDA_ARCHITECTURES 72)`
 
 ## Demo
 
