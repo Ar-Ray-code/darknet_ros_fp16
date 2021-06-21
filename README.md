@@ -1,14 +1,10 @@
 # darknet_ros_yolov4 (with cuDNN)
-darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + ___CUDNN (FP16)___ :fire::fire::fire:
-
-
-
-I've been wanting to make the ROS2 + YOLO v4 + __cuDNN__ implementation happen for a long time, and I'm happy to report that I was able to implement it.
+darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
 ## Main changes
 - __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
 - __Removed IPL__ : Switched from IPL to CV::Mat for OpenCV4 support.
-- __Support CUDNN__
+- __Support cuDNN__
 
 ## Requirements
 - ROS2 Foxy
@@ -28,24 +24,39 @@ $ colcon build --symlink-install
 ```
 ## Edit CMakeLists.txt
 
-Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to specify the appropriate architecture.
+### Options
+
+When each option is turned off, the respective compile option will be disabled. This item is for benchmarking purposes, as it will be automatically disabled if the required libraries are not installed.
+
+```
+set(CUDA_ENABLE ON)
+set(CUDNN_ENABLE ON)
+set(FP16_ENABLE ON)
+```
+
+### cuDNN (FP16)
+
+Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to specify the appropriate architecture. 
+
+FP16 is automatically enabled for GPUs of the Turing or Ampere architecture if the appropriate cuDNN is installed. To disable it, change line 12 to `set(FP16_ENABLE OFF)`.
+
+The Jetson AGX Xavier and TITAN V support FP16, but due to their Volta architecture, auto-detection is not possible. (Sorry... :( )
+In that case, please comment out line 17 ` set(CMAKE_CUDA_ARCHITECTURES 72)
 
 Open the CMakeLists.txt file and change the following.
 
-At line 40...
+At line 10...
 
 ```cmake
 ...
-find_package(CUDNN)
+set(CUDA_ENABLE ON)
+set(CUDNN_ENABLE ON)
+set(FP16_ENABLE ON)
 
-if(CUDNN_FOUND)
-    set(ADDITIONAL_CXX_FLAGS "${ADDITIONAL_CXX_FLAGS} -DCUDNN")
-endif()
+# Jetson AGX Xavier & TITAN V is under version of Turing. So, please set manually.
+# Turing or Ampere GPUs, FP16 is automatically enabled.
 
-set(CMAKE_CUDA_ARCHITECTURES 75) # <- Example (TU102) : 75
-
-if ( 70 IN_LIST CMAKE_CUDA_ARCHITECTURES OR
-     72 IN_LIST CMAKE_CUDA_ARCHITECTURES OR
+# set(CMAKE_CUDA_ARCHITECTURES 72)
 ...
 ```
 
@@ -55,18 +66,12 @@ In the future, I'm considering automatic detection of GPU architecture.
 
 Connect your webcam to your PC.
 
-### Terminal 1
 ```bash
 $ source /opt/ros/foxy/setup.bash
 $ source ~/ros2_ws/install/local_setup.bash
-$ ros2 run v4l2_camera v4l2_camera_node --ros-args -r __ns:=/camera/rgb
+$ ros2 launch darknet_ros demo-v4-tiny.launch.py
 ```
-### Terminal 2
-```bash
-$ source /opt/ros/foxy/setup.bash
-$ source ~/ros2_ws/install/local_setup.bash
-$ ros2 run darknet_ros yolov4.launch.py
-```
+
 ![example](https://user-images.githubusercontent.com/67567093/117596596-a2c8db00-b17e-11eb-90f9-146212e64567.png)
 
 ## Performance
