@@ -1,4 +1,13 @@
 # darknet_ros_yolov4 (with cuDNN)
+
+FP16 performance report has been released.
+
+- [English (GitHub Wiki)](https://github.com/Ar-Ray-code/darknet_ros_fp16/wiki/Darknet_ros_FP16-Report-(1.3x-faster)-%F0%9F%94%A5)
+
+- [Japanese (zenn)](https://zenn.dev/array/articles/4c82fc8382e62d)
+
+---
+
 darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
 ## Main changes
