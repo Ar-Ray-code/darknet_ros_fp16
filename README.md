@@ -26,7 +26,7 @@ darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fi
 $ source /opt/ros/foxy/setup.bash
 $ mkdir -p ~/ros2_ws/src
 $ cd ~/ros2_ws/src
-$ git clone --recursive --branch foxy-cudnn  https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
+$ git clone --recursive https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
 $ darknet_ros_yolov4/darknet_ros/rm_darknet_CMakeLists.sh
 $ cd ~/ros2_ws
 $ colcon build --symlink-install
