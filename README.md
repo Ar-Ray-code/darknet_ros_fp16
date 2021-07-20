@@ -23,6 +23,7 @@ darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fi
 
 ## Installation
 ```bash
+$ sudo apt install ros-foxy-desktop ros-foxy-v4l2-camera
 $ source /opt/ros/foxy/setup.bash
 $ mkdir -p ~/ros2_ws/src
 $ cd ~/ros2_ws/src
