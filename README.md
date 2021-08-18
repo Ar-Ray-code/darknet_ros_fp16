@@ -8,7 +8,7 @@ FP16 performance report has been released.
 
 ---
 
-darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
+darknet_ros + ROS1 Noetic + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
 ## Main changes
 - __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
@@ -16,21 +16,21 @@ darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fi
 - __Support cuDNN__
 
 ## Requirements
-- ROS2 Foxy
+- ROS1 Noetic
 - OpenCV 4.2
 - CUDA 10 or 11 (tested with CUDA 11.2)
 - cuDNN 8.1 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
 ## Installation
 ```bash
-$ sudo apt install ros-foxy-desktop ros-foxy-v4l2-camera
-$ source /opt/ros/foxy/setup.bash
-$ mkdir -p ~/ros2_ws/src
-$ cd ~/ros2_ws/src
-$ git clone --recursive https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
-$ darknet_ros_yolov4/darknet_ros/rm_darknet_CMakeLists.sh
-$ cd ~/ros2_ws
-$ colcon build --symlink-install
+sudo apt install ros-noetic-desktop ros-noetic-usb-cam
+source /opt/ros/noetic/setup.bash
+mkdir -p ~/ros1_ws/src
+cd ~/ros1_ws/src
+git clone --recursive https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
+darknet_ros_yolov4/darknet_ros/rm_darknet_CMakeLists.sh
+cd ~/ros1_ws
+catkin_make
 ```
 ## Edit CMakeLists.txt
 
@@ -59,9 +59,9 @@ In that case, please comment out line 17 `set(CMAKE_CUDA_ARCHITECTURES 72)`
 Connect your webcam to your PC.
 
 ```bash
-$ source /opt/ros/foxy/setup.bash
-$ source ~/ros2_ws/install/local_setup.bash
-$ ros2 launch darknet_ros demo-v4-tiny.launch.py
+source /opt/ros/noetic/setup.bash
+source ~/ros1_ws/devel/setup.bash
+roslaunch darknet_ros yolov4-tiny.launch
 ```
 
 ![example](https://user-images.githubusercontent.com/67567093/117596596-a2c8db00-b17e-11eb-90f9-146212e64567.png)
