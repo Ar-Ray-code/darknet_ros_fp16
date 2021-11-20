@@ -18,8 +18,8 @@ darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fi
 ## Requirements
 - ROS2 Foxy
 - OpenCV 4.2
-- CUDA 10 or 11 (tested with CUDA 11.2)
-- cuDNN 8.1 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
+- CUDA 10 or 11 (tested with CUDA 11.5)
+- cuDNN 8.3 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
 ## Installation
 ```bash
