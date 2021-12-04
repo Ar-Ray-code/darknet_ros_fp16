@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+    darknet-ros-fp16:
+        # image: Ar-Ray-code/darknet-ros-fp16:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
+        network_mode: host
+        runtime: nvidia
+        environment:
+            - DISPLAY=$DISPLAY
+        volumes:
+            - $HOME/ros2_ws:/root/ros2_ws
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        devices:
+            - "/dev/video0:/dev/video0"
+        working_dir: /root/ros2_ws
+        tty: true
+        command: bash

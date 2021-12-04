@@ -10,6 +10,23 @@ FP16 performance report has been released.
 
 darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
+## Try on Docker
+
+```bash
+docker pull ray255ar/darknet-ros-fp16
+# To Build =====================================
+# $ git clone https://github.com/Ar-Ray-code/darknet_ros_fp16.git
+# $ cd darknet_ros_fp16/ && docker build . -t Ar-Ray-code/darknet-ros-fp16`
+# ==============================================
+docker run --rm -it \
+	--device /dev/video0:/dev/video0:mwr \
+	-e DISPLAY=$DISPLAY --runtime nvidia \
+	-v /tmp/.X11-unix:/tmp/.X11-unix ray255ar/darknet-ros-fp16 \
+    /bin/bash yolov4-tiny-docker.bash
+```
+
+
+
 ## Main changes
 - __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
 - __Removed IPL__ : Switched from IPL to CV::Mat for OpenCV4 support.
