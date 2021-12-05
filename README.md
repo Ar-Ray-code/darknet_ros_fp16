@@ -1,23 +1,35 @@
-# darknet_ros_yolov4 (with cuDNN)
-
-FP16 performance report has been released.
-
-- [English (GitHub Wiki)](https://github.com/Ar-Ray-code/darknet_ros_fp16/wiki/Darknet_ros_FP16-Report-(1.3x-faster)-%F0%9F%94%A5)
-
-- [Japanese (zenn)](https://zenn.dev/array/articles/4c82fc8382e62d)
-
----
+# darknet_ros_fp16
 
 darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
-## Try on Docker
+- [English (GitHub Wiki)](https://github.com/Ar-Ray-code/darknet_ros_fp16/wiki/Darknet_ros_FP16-Report-(1.3x-faster)-%F0%9F%94%A5)
+- [Japanese (zenn)](https://zenn.dev/array/articles/4c82fc8382e62d)
+
+## Main changes
+
+- __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
+- __Removed IPL__ : Switched from IPL to CV::Mat for OpenCV4 support.
+- __Support cuDNN + FP16__
+
+## Try on Docker :whale:
+
+[DockerHub](https://hub.docker.com/r/ray255ar/darknet-ros-fp16)
+
+### Requirements
+
+- Ubuntu Desktop + NVIDIA Graphics Driver (version ` >=450.36.06**`)
+- v4l2-camera (Connect to `/dev/video*`)
+- NVIDIA Graphics Card (Volta , Turing , Ampere) & 
+- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker)
+- xhost (To install xhost , run `$ sudo apt install xorg` .)
+
+### Installation & Run
 
 ```bash
+xhost +
+# Pull docker image from dockerhub
 docker pull ray255ar/darknet-ros-fp16
-# To Build =====================================
-# $ git clone https://github.com/Ar-Ray-code/darknet_ros_fp16.git
-# $ cd darknet_ros_fp16/ && docker build . -t Ar-Ray-code/darknet-ros-fp16`
-# ==============================================
+# Run 
 docker run --rm -it \
 	--device /dev/video0:/dev/video0:mwr \
 	-e DISPLAY=$DISPLAY --runtime nvidia \
@@ -27,18 +39,15 @@ docker run --rm -it \
 
 
 
-## Main changes
-- __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
-- __Removed IPL__ : Switched from IPL to CV::Mat for OpenCV4 support.
-- __Support cuDNN__
+## Installation :turtle:
 
-## Requirements
+### Requirements
 - ROS2 Foxy
 - OpenCV 4.2
 - CUDA 10 or 11 (tested with CUDA 11.5)
 - cuDNN 8.3 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
-## Installation
+### Installation
 ```bash
 $ sudo apt install ros-foxy-desktop ros-foxy-v4l2-camera
 $ source /opt/ros/foxy/setup.bash
@@ -49,9 +58,9 @@ $ darknet_ros_yolov4/darknet_ros/rm_darknet_CMakeLists.sh
 $ cd ~/ros2_ws
 $ colcon build --symlink-install
 ```
-## Edit CMakeLists.txt
+### Edit CMakeLists.txt
 
-### Options
+#### Options
 
 When each option is turned off, the respective compile option will be disabled. This item is for benchmarking purposes, as it will be automatically disabled if the required libraries are not installed.
 
@@ -61,7 +70,7 @@ set(CUDNN_ENABLE ON)
 set(FP16_ENABLE ON)
 ```
 
-### cuDNN (FP16)
+#### cuDNN (FP16)
 
 Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to specify the appropriate architecture. 
 
@@ -71,7 +80,7 @@ The Jetson AGX Xavier and TITAN V support FP16, but due to their Volta architect
 
 In that case, please comment out line 17 `set(CMAKE_CUDA_ARCHITECTURES 72)`
 
-## Demo
+### Demo
 
 Connect your webcam to your PC.
 
@@ -91,18 +100,10 @@ Using YOLO v4 consumes a lot of GPU memory and lowers the frame rate, so you nee
 
 | Topics | Spec                                    |
 | ------ | --------------------------------------- |
-| CPU    | Ryzen7 2700X (@3.7GHz x 16)             |
-| RAM    | 16GB DDR4                               |
+| CPU    | Intel Core i9 12900KF                   |
+| RAM    | 64GB DDR4                               |
 | GPU    | NVIDIA GeForce RTX 2080 Ti (GDDR6 11GB) |
-| Driver | 460.32.03                               |
-
-### Performance (Not using cuDNN FP16)
-
-YOLO v3 : 67 fps , uses 1781MB of VRAM
-
-YOLO v4 : 29 fps , uses 3963MB of VRAM
-
-Scaled YOLO v4 : 51 fps , uses 2831MB of VRAM
+| Driver | 495.29.05                               |
 
 ### Performance (using cuDNN FP16)
 
@@ -110,16 +111,11 @@ YOLO v4 : 40 fps (+10fps)
 
 Scaled YOLO v4 : 60fps (+9fps)
 
-YOLO v4-tiny : 140fps+ (MAX 150fps:fire:)
+YOLO v4-tiny : 224fps
 
 YOLO v2-tiny : 135fps+
 
-
-
 ![E2tRQvnUcAQqn8O](https://user-images.githubusercontent.com/67567093/121984014-35d3e100-cdcd-11eb-9959-b1063a9a0b2b.jpeg)
-
-
-Please give it a try. Thank you.
 
 
 
