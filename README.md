@@ -1,4 +1,4 @@
-# darknet_ros_fp16
+# darknet-ros-fp16
 
 darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
@@ -17,10 +17,12 @@ darknet_ros + ROS2 Foxy + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fi
 
 ### Requirements
 
-- Ubuntu Desktop + NVIDIA Graphics Driver (version ` >=450.36.06**`)
+- Ubuntu Desktop + NVIDIA Graphics Driver
 - v4l2-camera (Connect to `/dev/video*`)
-- NVIDIA Graphics Card (Volta , Turing , Ampere) & 
-- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker)
+- NVIDIA Graphics Card (Volta , Turing , Ampere) 
+- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker) 
+  - This docker image is using `cuda:11.4.2` .
+
 - xhost (To install xhost , run `$ sudo apt install xorg` .)
 
 ### Installation & Run
@@ -44,7 +46,7 @@ docker run --rm -it \
 ### Requirements
 - ROS2 Foxy
 - OpenCV 4.2
-- CUDA 10 or 11 (tested with CUDA 11.5)
+- CUDA 10 or 11 (tested with CUDA 11.5.119)
 - cuDNN 8.3 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
 ### Installation
@@ -64,7 +66,7 @@ $ colcon build --symlink-install
 
 When each option is turned off, the respective compile option will be disabled. This item is for benchmarking purposes, as it will be automatically disabled if the required libraries are not installed.
 
-```
+```cmake
 set(CUDA_ENABLE ON)
 set(CUDNN_ENABLE ON)
 set(FP16_ENABLE ON)
@@ -80,6 +82,28 @@ The Jetson AGX Xavier and TITAN V support FP16, but due to their Volta architect
 
 In that case, please comment out line 17 `set(CMAKE_CUDA_ARCHITECTURES 72)`
 
+#### Download darknet weights
+
+Since the weights to be downloaded are large, you can select the weights to be downloaded by the options.
+
+- DOWNLOAD_YOLOV2_TINY (Default : `ON`)
+- DOWNLOAD_YOLOV3 (Default : `OFF`)
+- DOWNLOAD_YOLOV4 (Default : `ON`)
+- DOWNLOAD_YOLOV4_CSP (Default : `OFF`)
+- DOWNLOAD_YOLOV4_TINY (Default : `ON`)
+- DOWNLOAD_YOLOV4_MISH (Default : `OFF`)
+
+```cmake
+set(DOWNLOAD_YOLOV2_TINY ON)
+set(DOWNLOAD_YOLOV3 OFF)
+set(DOWNLOAD_YOLOV4 ON)
+set(DOWNLOAD_YOLOV4_CSP OFF)
+set(DOWNLOAD_YOLOV4_TINY OFF)
+set(DOWNLOAD_YOLOV4_MISH OFF)
+```
+
+
+
 ### Demo
 
 Connect your webcam to your PC.
@@ -91,6 +115,8 @@ $ ros2 launch darknet_ros demo-v4-tiny.launch.py
 ```
 
 ![example](https://user-images.githubusercontent.com/67567093/117596596-a2c8db00-b17e-11eb-90f9-146212e64567.png)
+
+
 
 ## Performance
 
@@ -107,13 +133,17 @@ Using YOLO v4 consumes a lot of GPU memory and lowers the frame rate, so you nee
 
 ### Performance (using cuDNN FP16)
 
-YOLO v4 : 40 fps (+10fps)
+YOLO v4 : 48fps
 
-Scaled YOLO v4 : 60fps (+9fps)
+Scaled YOLO v4 : 80fps
 
-YOLO v4-tiny : 224fps
+YOLO v4-tiny : 215fps
 
-YOLO v2-tiny : 135fps+
+YOLO v4x-mish : 32fps
+
+YOLO v2-tiny : 205fps (Min : 24fps)
+
+> Note : YOLOv2-tiny is deprecated.
 
 ![E2tRQvnUcAQqn8O](https://user-images.githubusercontent.com/67567093/121984014-35d3e100-cdcd-11eb-9959-b1063a9a0b2b.jpeg)
 
