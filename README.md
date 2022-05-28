@@ -1,6 +1,6 @@
 # darknet-ros-fp16
 
-darknet_ros + ROS2 Galactic + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
+darknet_ros + ROS2 Humble + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
 
 - [English (GitHub Wiki)](https://github.com/Ar-Ray-code/darknet_ros_fp16/wiki/Darknet_ros_FP16-Report-(1.3x-faster)-%F0%9F%94%A5)
 - [Japanese (zenn)](https://zenn.dev/array/articles/4c82fc8382e62d)
@@ -25,8 +25,8 @@ darknet_ros + ROS2 Galactic + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire
 
 - Ubuntu Desktop + NVIDIA Graphics Driver
 - v4l2-camera (Connect to `/dev/video*`)
-- NVIDIA Graphics Card (Volta , Turing , Ampere) 
-- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker) 
+- NVIDIA Graphics Card (Volta , Turing , Ampere)
+- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker)
   - This docker image is using `cuda:11.4.2` .
 
 - xhost (To install xhost , run `$ sudo apt install xorg` .)
@@ -37,7 +37,7 @@ darknet_ros + ROS2 Galactic + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire
 xhost +
 # Pull docker image from dockerhub
 docker pull ray255ar/darknet-ros-fp16
-# Run 
+# Run
 docker run --rm -it \
 	--device /dev/video0:/dev/video0:mwr \
 	-e DISPLAY=$DISPLAY --runtime nvidia \
@@ -50,15 +50,15 @@ docker run --rm -it \
 ## Installation :turtle:
 
 ### Requirements
-- ROS2 Foxy
+- ROS2 Humble
 - OpenCV 4.2
 - CUDA 10 or 11 (tested with CUDA 11.5.119)
 - cuDNN 8.3 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
 ### Installation
 ```bash
-$ sudo apt install ros-foxy-desktop ros-foxy-v4l2-camera
-$ source /opt/ros/foxy/setup.bash
+$ sudo apt install ros-humble-desktop ros-humble-v4l2-camera
+$ source /opt/ros/humble/setup.bash
 $ mkdir -p ~/ros2_ws/src
 $ cd ~/ros2_ws/src
 $ git clone --recursive https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
@@ -80,7 +80,7 @@ set(FP16_ENABLE ON)
 
 #### cuDNN (FP16)
 
-Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to specify the appropriate architecture. 
+Darknet can be made even faster by enabling CUDNN_HALF(FP16), but you need to specify the appropriate architecture.
 
 FP16 is automatically enabled for GPUs of the Turing or Ampere architecture if the appropriate cuDNN is installed. To disable it, change line 12 to `set(FP16_ENABLE OFF)`.
 
@@ -115,7 +115,7 @@ set(DOWNLOAD_YOLOV4_MISH OFF)
 Connect your webcam to your PC.
 
 ```bash
-$ source /opt/ros/foxy/setup.bash
+$ source /opt/ros/humble/setup.bash
 $ source ~/ros2_ws/install/local_setup.bash
 $ ros2 launch darknet_ros demo-v4-tiny.launch.py
 ```
