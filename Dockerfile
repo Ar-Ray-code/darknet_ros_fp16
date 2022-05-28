@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04
+FROM nvidia/cuda:11.7.0-devel-ubuntu22.04
 
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -17,9 +17,9 @@ RUN apt update && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
     apt update && \
     apt install -y  -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" keyboard-configuration && \
-    apt install -y ros-foxy-desktop && \
+    apt install -y ros-humble-desktop && \
     apt install -y python3-colcon-common-extensions && \
-    apt install -y ros-foxy-v4l2-camera && \
+    apt install -y ros-humble-v4l2-camera && \
     apt install -y git && \
     apt install -y xterm && \
     apt install -y wget && \
