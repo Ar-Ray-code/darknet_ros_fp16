@@ -52,8 +52,8 @@ docker run --rm -it \
 ### Requirements
 - ROS2 Humble
 - OpenCV 4.2
-- CUDA 10 or 11 (tested with CUDA 11.5.119)
-- cuDNN 8.3 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
+- CUDA 10 or 11 (tested with CUDA 11.7)
+- cuDNN 8 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
 
 ### Installation
 ```bash
