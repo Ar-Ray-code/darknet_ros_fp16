@@ -99,14 +99,6 @@ In that case, please comment out line 17 `set(CMAKE_CUDA_ARCHITECTURES 72)`
 
 Since the weights to be downloaded are large, you can select the weights to be downloaded by the options.
 
-- DOWNLOAD_YOLOV2_TINY (Default : `ON`)
-- DOWNLOAD_YOLOV3 (Default : `OFF`)
-- DOWNLOAD_YOLOV4 (Default : `ON`)
-- DOWNLOAD_YOLOV4_CSP (Default : `OFF`)
-- DOWNLOAD_YOLOV4_TINY (Default : `ON`)
-- DOWNLOAD_YOLOV4_MISH (Default : `OFF`)
-- DOWNLOAD_YOLOV7_TINY (Default : `ON`)
-
 ```cmake
 set(DOWNLOAD_YOLOV2_TINY ON)　 # default : on
 set(DOWNLOAD_YOLOV3 OFF)       # default : off
