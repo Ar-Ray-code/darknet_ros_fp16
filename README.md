@@ -1,37 +1,49 @@
 # darknet-ros-fp16
 
-darknet_ros + ROS2 Humble + OpenCV4 + CUDA 11.2 + __CUDNN (FP16)__ :fire::fire::fire:
+darknet_ros + ROS2 Humble + OpenCV4 + CUDA 11 + __CUDNN (FP16)__ :fire::fire::fire:
 
 - [English (GitHub Wiki)](https://github.com/Ar-Ray-code/darknet_ros_fp16/wiki/Darknet_ros_FP16-Report-(1.3x-faster)-%F0%9F%94%A5)
 - [Japanese (zenn)](https://zenn.dev/array/articles/4c82fc8382e62d)
 
-## May 1st 2022 Update :fire:
+<br>
 
-- Support Ampere arch (including Jetson Orin)
+## Update
+
+- May 1st 2022 Update
+  - Support Ampere arch (including Jetson Orin)
+- July 23th 2022 Update
+  - Support YOLOv7-tiny
 
 <br>
 
 ## Main changes
 
-- __Support for YOLO v4__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
+- __Support for YOLO v7__ : Switched the submodule to the master branch of [AlexeyAB/darknet.](https://github.com/AlexeyAB/darknet)
 - __Removed IPL__ : Switched from IPL to CV::Mat for OpenCV4 support.
 - __Support cuDNN + FP16__
 
-## Try on Docker :whale:
+<!-- ## Try on Docker :whale:
 
-[DockerHub](https://hub.docker.com/r/ray255ar/darknet-ros-fp16)
+[DockerHub](https://hub.docker.com/r/ray255ar/darknet-ros-fp16) -->
 
-### Requirements
+<br>
 
-- Ubuntu Desktop + NVIDIA Graphics Driver
+## Requirements
+
+- ROS2 (tested on Humble)
+- CUDA10 or later
+  - If not, it will automatically turn off
+- OpenCV
 - v4l2-camera (Connect to `/dev/video*`)
 - NVIDIA Graphics Card (Volta , Turing , Ampere)
-- Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker)
-  - This docker image is using `cuda:11.4.2` .
-
+<!-- - Docker + [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker)
+  - This docker image is using `cuda:11.7` . -->
 - xhost (To install xhost , run `$ sudo apt install xorg` .)
+- cuDNN (Ubuntu 20.04)
 
-### Installation & Run
+<br>
+
+<!-- ## Installation & Run
 
 ```bash
 xhost +
@@ -43,19 +55,14 @@ docker run --rm -it \
 	-e DISPLAY=$DISPLAY --runtime nvidia \
 	-v /tmp/.X11-unix:/tmp/.X11-unix ray255ar/darknet-ros-fp16 \
     /bin/bash yolov4-tiny-docker.bash
-```
+``` -->
 
 
 
-## Installation :turtle:
-
-### Requirements
-- ROS2 Humble
-- OpenCV 4.2
-- CUDA 10 or 11 (tested with CUDA 11.7)
-- cuDNN 8 ([Installation tutorial](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html))
+## Installation 🐢
 
 ### Installation
+
 ```bash
 $ sudo apt install ros-humble-desktop ros-humble-v4l2-camera
 $ source /opt/ros/humble/setup.bash
@@ -98,14 +105,16 @@ Since the weights to be downloaded are large, you can select the weights to be d
 - DOWNLOAD_YOLOV4_CSP (Default : `OFF`)
 - DOWNLOAD_YOLOV4_TINY (Default : `ON`)
 - DOWNLOAD_YOLOV4_MISH (Default : `OFF`)
+- DOWNLOAD_YOLOV7_TINY (Default : `ON`)
 
 ```cmake
-set(DOWNLOAD_YOLOV2_TINY ON)
-set(DOWNLOAD_YOLOV3 OFF)
-set(DOWNLOAD_YOLOV4 ON)
-set(DOWNLOAD_YOLOV4_CSP OFF)
-set(DOWNLOAD_YOLOV4_TINY OFF)
-set(DOWNLOAD_YOLOV4_MISH OFF)
+set(DOWNLOAD_YOLOV2_TINY ON)　 # default : on
+set(DOWNLOAD_YOLOV3 OFF)       # default : off
+set(DOWNLOAD_YOLOV4 ON)      　# default : on
+set(DOWNLOAD_YOLOV4_CSP OFF) 　# default : off
+set(DOWNLOAD_YOLOV4_TINY OFF)  # default : on
+set(DOWNLOAD_YOLOV4_MISH OFF)　# default : off
+set(DOWNLOAD_YOLOV7_TINY ON)　 # default : on
 ```
 
 
@@ -149,10 +158,26 @@ YOLO v4x-mish : 32fps
 
 YOLO v2-tiny : 205fps (Min : 24fps)
 
+YOLOv7-tiny : 160fps (cudnn_half = 0)
+
 > Note : YOLOv2-tiny is deprecated.
 
 ![E2tRQvnUcAQqn8O](https://user-images.githubusercontent.com/67567093/121984014-35d3e100-cdcd-11eb-9959-b1063a9a0b2b.jpeg)
 
+
+## YOLOv7 🚀
+
+```bash
+git clone https://github.com/Ar-Ray-code/darknet_ros_fp16 --recursive ~/darknet_ws/src/darknet_ros_fp16
+darknet_ws/src/darknet_ros_fp16/darknet_ros/rm_darknet_CMakeLists.sh
+
+source /opt/ros/humble/setup.bash
+cd ~/darknet_ws/
+colcon build --symlink-install
+source install/setup.bash
+
+ros2 launch darknet_ros yolov7.launch.py
+```
 
 
 ## Acknowledgment
