@@ -40,5 +40,7 @@ RUN LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs/:$LD_LIBRARY_PATH
 # USE Usb Camera
 CMD ["bash"]
 # ================================
-# docker build . -t darknet-ros-fp16
-# docker run --rm -it --device /dev/video0:/dev/video0:mwr -e DISPLAY=$DISPLAY --gps all -v /tmp/.X11-unix:/tmp/.X11-unix darknet-ros-fp16 /bin/bash
+# git clone https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
+# docker build -t darknet-ros-fp16 ./darknet_ros_fp16/.
+# # (connect webcamera)
+# docker run --rm -it --device /dev/video0:/dev/video0:mwr -e DISPLAY=$DISPLAY --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix darknet_ros_fp16 /bin/bash
