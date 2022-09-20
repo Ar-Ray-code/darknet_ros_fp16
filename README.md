@@ -43,21 +43,6 @@ darknet_ros + ROS2 Humble + OpenCV4 + CUDA 11 + __CUDNN (FP16)__ :fire::fire::fi
 
 <br>
 
-<!-- ## Installation & Run
-
-```bash
-xhost +
-# Pull docker image from dockerhub
-docker pull ray255ar/darknet-ros-fp16
-# Run
-docker run --rm -it \
-	--device /dev/video0:/dev/video0:mwr \
-	-e DISPLAY=$DISPLAY --runtime nvidia \
-	-v /tmp/.X11-unix:/tmp/.X11-unix ray255ar/darknet-ros-fp16 \
-    /bin/bash yolov4-tiny-docker.bash
-``` -->
-
-
 
 ## Installation 🐢
 
@@ -73,6 +58,21 @@ $ darknet_ros_yolov4/darknet_ros/rm_darknet_CMakeLists.sh
 $ cd ~/ros2_ws
 $ colcon build --symlink-install
 ```
+
+### NVIDIA-Docker
+
+- Driver version : 515.65.01
+- NVIDIA Docker2
+- NVIDIA Graphics card (Tested : RTX3060Ti)
+
+```bash
+git clone https://github.com/Ar-Ray-code/darknet_ros_yolov4.git
+docker build -t darknet-ros-fp16 ./darknet_ros_fp16/.
+
+# connect webcamera
+docker run --rm -it --device /dev/video0:/dev/video0:mwr -e DISPLAY=$DISPLAY --gps all -v /tmp/.X11-unix:/tmp/.X11-unix darknet-ros-fp16 /bin/bash
+```
+
 ### Edit CMakeLists.txt
 
 #### Options

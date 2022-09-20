@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.7.0-devel-ubuntu22.04
+FROM nvidia/cuda:11.7.0-cudnn8-devel-ubuntu22.04
 
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -23,6 +23,7 @@ RUN apt update && \
     apt install -y git && \
     apt install -y xterm && \
     apt install -y wget && \
+    apt install -y pciutils && \
     apt -y clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -33,11 +34,11 @@ RUN bash darknet_ros/rm_darknet_CMakeLists.sh
 WORKDIR /home/ros2_ws/
 COPY ./yolov4-tiny-docker.bash /home/ros2_ws/yolov4-tiny-docker.bash
 
-RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+# RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 RUN LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs/:$LD_LIBRARY_PATH
 
 # USE Usb Camera
 CMD ["bash"]
 # ================================
 # docker build . -t darknet-ros-fp16
-# docker run --rm -it --device /dev/video0:/dev/video0:mwr -e DISPLAY=$DISPLAY --runtime nvidia -v /tmp/.X11-unix:/tmp/.X11-unix darknet-ros-fp16 /bin/bash
+# docker run --rm -it --device /dev/video0:/dev/video0:mwr -e DISPLAY=$DISPLAY --gps all -v /tmp/.X11-unix:/tmp/.X11-unix darknet-ros-fp16 /bin/bash
